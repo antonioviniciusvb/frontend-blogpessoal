@@ -16,7 +16,7 @@ function Home() {
           </div>
           <div id="imagem" className="flex justify-center">
             <img
-              src="https://i.imgur.com/VpwApCU.png"
+              src="https://ik.imagekit.io/mgz6clat5/Code%20typing-bro.svg?updatedAt=1705520017160"
               alt="Imagem da Página Home"
               className="w-2/3"></img>
           </div>
