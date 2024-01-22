@@ -3,12 +3,15 @@ import { atualizar, buscar, cadastrar } from '../../../services/Service';
 import { AuthContext } from '../../../contexts/AuthContexts';
 import { useNavigate, useParams } from 'react-router-dom';
 import Tema from '../../../models/Tema';
+import { RotatingLines } from 'react-loader-spinner';
 
 
 
 function FormularioTema() {
 
     const [tema, setTema] = useState<Tema>({} as Tema);
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     let navigate = useNavigate();
 
@@ -31,6 +34,13 @@ function FormularioTema() {
         }
     }, [id])
 
+    useEffect(() => {
+        if (token === '') {
+            alert('Você precisa estar logado');
+            navigate('/login');
+        }
+    }, [token]);
+
     function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
         setTema({
             ...tema,
@@ -42,6 +52,7 @@ function FormularioTema() {
 
     async function gerarNovoTema(e: ChangeEvent<HTMLFormElement>) {
         e.preventDefault()
+        setIsLoading(true)
 
         if (id !== undefined) {
             try {
@@ -52,8 +63,7 @@ function FormularioTema() {
                 })
 
                 alert('Tema atualizado com sucesso')
-                retornar()
-
+            
             } catch (error: any) {
                 if (error.toString().includes('403')) {
                     alert('O token expirou, favor logar novamente')
@@ -84,20 +94,14 @@ function FormularioTema() {
             }
         }
 
+        setIsLoading(false)
+
         retornar()
     }
 
     function retornar() {
         navigate("/temas")
     }
-
-    useEffect(() => {
-        if (token === '') {
-            alert('Você precisa estar logado');
-            navigate('/login');
-        }
-    }, [token]);
-
 
     return (
         <div className="container flex flex-col items-center justify-center mx-auto">
@@ -119,10 +123,17 @@ function FormularioTema() {
                     />
                 </div>
                 <button
-                    className="rounded text-slate-100 bg-indigo-400 hover:bg-indigo-800 w-1/2 py-2 mx-auto block"
+                    className="rounded text-slate-100 bg-indigo-400 hover:bg-indigo-800 w-1/2 py-2 mx-auto flex justify-center"
                     type="submit"
                 >
-                    {id === undefined ? 'Cadastrar' : 'Editar'}
+
+                    {isLoading ? <RotatingLines
+                        strokeColor="white"
+                        strokeWidth="5"
+                        animationDuration="0.75"
+                        width="24"
+                        visible={true} /> : <span> {id === undefined ? 'Cadastrar' : 'Atualizar'}</span>}
+
                 </button>
             </form>
         </div>

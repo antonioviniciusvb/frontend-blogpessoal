@@ -3,10 +3,13 @@ import Tema from '../../../models/Tema'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../../contexts/AuthContexts'
 import { buscar, deletar } from '../../../services/Service'
+import { RotatingLines } from 'react-loader-spinner'
 
 function DeletarTema() {
 
     const [tema, setTema] = useState<Tema>({} as Tema)
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     let navigate = useNavigate()
 
@@ -48,6 +51,9 @@ function DeletarTema() {
     }
 
     async function deletarTema() {
+
+        setIsLoading(true)
+
         try {
             await deletar(`/temas/${id}`, {
                 headers: {
@@ -61,6 +67,7 @@ function DeletarTema() {
             alert('Erro ao apagar o Tema')
         }
 
+        setIsLoading(false)
         retornar()
     }
 
@@ -76,7 +83,12 @@ function DeletarTema() {
                 <div className="flex">
                     <button className='text-slate-100 bg-red-400 hover:bg-red-600 w-full py-2' onClick={retornar}>Não</button>
                     <button className='w-full text-slate-100 bg-indigo-400 hover:bg-indigo-600 flex items-center justify-center' onClick={deletarTema}>
-                        Sim
+                    {isLoading ? <RotatingLines
+                        strokeColor="white"
+                        strokeWidth="5"
+                        animationDuration="0.75"
+                        width="24"
+                        visible={true} /> : <span>Sim</span>}
                     </button>
                 </div>
             </div>

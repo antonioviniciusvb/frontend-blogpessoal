@@ -8,6 +8,8 @@ import Tema from '../../../models/Tema';
 
 function ListaTemas() {
   
+    // Estado inicial vazio ([])
+    // Sempre devemos seta o estado inicial com o useState
     const [temas, setTemas] = useState<Tema[]>([]);
 
     let navigate = useNavigate();
