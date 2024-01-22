@@ -10,7 +10,6 @@ function Navbar() {
   function logout() {
     handleLogout()
     alert("O Usuário foi desconectado com sucesso!")
-    console.log("chegou aqui")
     navigate('/login')
   }
 
@@ -22,8 +21,8 @@ function Navbar() {
           <div className='flex gap-4'>
 
             <div className='hover:underline'>Postagens</div>
-            <div className='hover:underline'>Temas</div>
-            {/* <div className='hover:underline'>Cadastrar tema</div> */}
+            <Link to='/temas' className='hover:underline'>Temas</Link>
+            <Link to='/cadastroTema' className='hover:underline'>Cadastrar tema</Link>
             <div className='hover:underline'>Perfil</div>
            
             <Link to=' ' onClick={logout} className="hover:underline">Sair</Link>
