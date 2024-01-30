@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthContexts';
 import { buscar } from '../../../services/Service';
 import { DNA } from 'react-loader-spinner';
+import { ToastAlerta } from '../../../utils/ToastAlerta';
 
 
 function ListaPostagens() {
@@ -18,7 +19,7 @@ function ListaPostagens() {
 
   useEffect(() => {
     if (token === '') {
-      alert('Você precisa estar logado');
+      ToastAlerta('Você precisa estar logado', 'erro');
       navigate('/');
     }
   }, [token]);
@@ -32,7 +33,7 @@ function ListaPostagens() {
       });
     } catch (error: any) {
       if (error.toString().includes('403')) {
-        alert('O token expirou, favor logar novamente')
+        ToastAlerta('O token expirou, favor logar novamente', 'erro')
         handleLogout()
       }
     }

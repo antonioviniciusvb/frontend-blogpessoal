@@ -4,6 +4,7 @@ import Usuario from '../../models/Usuario'
 import { useNavigate } from 'react-router-dom'
 import { cadastrarUsuario } from '../../services/Service'
 import { RotatingLines } from 'react-loader-spinner'
+import { ToastAlerta } from '../../utils/ToastAlerta'
 
 function Cadastro() {
 
@@ -57,14 +58,14 @@ function Cadastro() {
       try {
 
         await cadastrarUsuario(`/usuarios/cadastrar`, usuario, setUsuario)
-        alert("Usuário cadastrado com sucesso!")
+        ToastAlerta("Usuário cadastrado com sucesso!", 'sucesso')
 
       } catch (error) {
-        alert("Erro ao cadastrar o usuário!")
+        ToastAlerta("Erro ao cadastrar o usuário!", 'erro')
       }
     } else {
 
-      alert("Senhas devem ser iguais e maior que 8 caracteres!")
+      ToastAlerta("Senhas devem ser iguais e maior que 8 caracteres!", 'info')
       setUsuario({...usuario, senha: ''})
       setConfirmaSenha('')
     }
@@ -143,7 +144,7 @@ function Cadastro() {
             <button className='rounded text-white bg-red-400 hover:bg-red-700 w-1/2 py-2' onClick={retornar} >
               Cancelar
             </button>
-            <button className='rounded text-white bg-indigo-400 hover:bg-indigo-900 w-1/2 py-2 flex justify-center' type='submit'>
+            <button className='rounded text-white bg-sky-700 hover:bg-sky-900 w-1/2 py-2 flex justify-center' type='submit'>
              {isLoading ? <RotatingLines
                 strokeColor="white"
                 strokeWidth="5"

@@ -5,6 +5,7 @@ import Tema from "../../../models/Tema";
 import Postagem from "../../../models/Postagem";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner";
+import { ToastAlerta } from "../../../utils/ToastAlerta";
 
 
 
@@ -61,7 +62,7 @@ function FormularioPostagem() {
 
     useEffect(() => {
         if (token === '') {
-            alert('Você precisa estar logado');
+            ToastAlerta('Você precisa estar logado', 'erro');
             navigate('/');
         }
     }, [token]);
@@ -108,14 +109,14 @@ function FormularioPostagem() {
                         Authorization: token,
                     },
                 });
-                alert('Postagem atualizada com sucesso');
+                ToastAlerta('Postagem atualizada com sucesso', 'sucesso');
                 retornar();
             } catch (error: any) {
                 if (error.toString().includes('403')) {
-                    alert('O token expirou, favor logar novamente')
+                    ToastAlerta('O token expirou, favor logar novamente', 'erro')
                     handleLogout()
                 } else {
-                    alert('Erro ao atualizar a Postagem');
+                    ToastAlerta('Erro ao atualizar a Postagem', 'erro');
                 }
             }
         } else {
@@ -126,14 +127,14 @@ function FormularioPostagem() {
                     },
                 });
 
-                alert('Postagem cadastrada com sucesso');
+                ToastAlerta('Postagem cadastrada com sucesso', 'sucesso');
                 retornar();
             } catch (error: any) {
                 if (error.toString().includes('403')) {
-                    alert('O token expirou, favor logar novamente')
+                    ToastAlerta('O token expirou, favor logar novamente', 'erro')
                     handleLogout()
                 } else {
-                    alert('Erro ao cadastrar a Postagem');
+                    ToastAlerta('Erro ao cadastrar a Postagem', 'erro');
                 }
             }
         }
@@ -185,7 +186,7 @@ function FormularioPostagem() {
 
                     </select>
                 </div>
-                <button disabled={carregandoTema} type='submit' className='rounded disabled:bg-slate-200 bg-indigo-400 hover:bg-indigo-800 text-white font-bold w-1/2 mx-auto flex py-2 justify-center'>
+                <button disabled={carregandoTema} type='submit' className='rounded disabled:bg-slate-200 bg-sky-700 hover:bg-sky-800 text-white font-bold w-1/2 mx-auto flex py-2 justify-center'>
                 
                     {isLoading ? <RotatingLines
                         strokeColor="white"

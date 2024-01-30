@@ -4,6 +4,7 @@ import { AuthContext } from '../../../contexts/AuthContexts';
 import { useNavigate, useParams } from 'react-router-dom';
 import Tema from '../../../models/Tema';
 import { RotatingLines } from 'react-loader-spinner';
+import { ToastAlerta } from '../../../utils/ToastAlerta';
 
 
 
@@ -36,7 +37,7 @@ function FormularioTema() {
 
     useEffect(() => {
         if (token === '') {
-            alert('Você precisa estar logado');
+            ToastAlerta('Você precisa estar logado', 'erro');
             navigate('/login');
         }
     }, [token]);
@@ -62,14 +63,14 @@ function FormularioTema() {
                     }
                 })
 
-                alert('Tema atualizado com sucesso')
+                ToastAlerta('Tema atualizado com sucesso', 'sucesso')
             
             } catch (error: any) {
                 if (error.toString().includes('403')) {
-                    alert('O token expirou, favor logar novamente')
+                    ToastAlerta('O token expirou, favor logar novamente', 'erro')
                     handleLogout()
                 } else {
-                    alert('Erro ao atualizar o Tema')
+                    ToastAlerta('Erro ao atualizar o Tema', 'erro')
                 }
 
             }
@@ -82,14 +83,14 @@ function FormularioTema() {
                     }
                 })
 
-                alert('Tema cadastrado com sucesso')
+                ToastAlerta('Tema cadastrado com sucesso', 'sucesso')
 
             } catch (error: any) {
                 if (error.toString().includes('403')) {
-                    alert('O token expirou, favor logar novamente')
+                    ToastAlerta('O token expirou, favor logar novamente', 'erro')
                     handleLogout()
                 } else {
-                    alert('Erro ao cadastrado o Tema')
+                    ToastAlerta('Erro ao cadastrado o Tema', 'erro')
                 }
             }
         }
@@ -123,7 +124,7 @@ function FormularioTema() {
                     />
                 </div>
                 <button
-                    className="rounded text-slate-100 bg-indigo-400 hover:bg-indigo-800 w-1/2 py-2 mx-auto flex justify-center"
+                    className="rounded text-slate-100 bg-sky-700 hover:bg-sky-800 w-1/2 py-2 mx-auto flex justify-center"
                     type="submit"
                 >
 
